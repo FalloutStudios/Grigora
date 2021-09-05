@@ -143,6 +143,10 @@ function newBot(currentPlayer = 0, ip = 'localhost', port = 25565, version = nul
                 y: bot.entity.position.y,
                 z: bot.entity.position.z
             },
+            lastServer: {
+                ip: ip,
+                port: port
+            },
             lastCheck: date_dmy
         }
 
