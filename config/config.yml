@@ -1,11 +1,20 @@
+# Server Information
 server:
-  ip: 'ZUCHINIsmp.aternos.me'
-  port: 27156
-  version:
+  ip: 'ZUCHINIsmp.aternos.me' # Server IP
+  port: 27156 # Server port
+  version: # Server version (keep empty to use supported version)
+
+# Victims username
 players:
   - 'luizn2010'
   - 'Wackin'
   - 'beebow'
   - 'GhexterCortes'
-output-file: coordinates.yml
-version: 0.1
+  - 'AlphaMegaKing'
+
+# Other Settings
+connect-interval: 3000 # Connection interval to prevent "Connection throttled!"
+output-file: coordinates.yml # Output file
+
+# Version
+version: 0.1 # Config version (Don't modify)

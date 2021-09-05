@@ -69,9 +69,6 @@ function parseConfig (path = 'config/config.yml') {
     parsedYML = getContents;
 
     console.log('\x1b[32m%s\x1b[0m','[Log - Config] Starting Grigora');
-    console.log();
-    console.log(parsedYML);
-    console.log();
 
     return parsedYML;
 }
@@ -83,12 +80,10 @@ function newBot(currentPlayer = 0, ip = 'localhost', port = 25565, version = nul
     ip = ip.trim().toLowerCase();
     port = parseInt(port, 10);
 
-    console.log(currentPlayer + ' - ' +config['players'][currentPlayer]);
-
     let name = config['players'][currentPlayer];
         name = name.trim();
 
-    console.log('[Log - Mincraft Bot] Starting '+name+' v'+version);
+    console.log('[Log - Mincraft Bot] Starting '+currentPlayer+':'+name+' '+version);
 
     // Set to default server port if null
     if(port == null || isNaN(port)){
@@ -108,17 +103,18 @@ function newBot(currentPlayer = 0, ip = 'localhost', port = 25565, version = nul
         version: version
     });
 
-    console.log('[Log - Mincraft Bot] Connecting '+name+' v'+version);
+    console.log('[Log - Mincraft Bot] Connecting '+name+' '+version);
 
-    bot.on('login', function(){
+    bot.on('spawn', function(){
         console.log();
         console.log('Bot '+name+' coords: '+bot.entity.position);
         console.log();
-
+        
+        console.log('[Log - Minecraft Bot] Disconnecting: '+name);
         setTimeout(() => {
             bot.quit();
             bot.end();
-        }, 1000);
+        }, 500);
     });
 
     bot.on('end', function(){
@@ -127,12 +123,21 @@ function newBot(currentPlayer = 0, ip = 'localhost', port = 25565, version = nul
         // New Player
         currentConnected++;
         if(currentConnected < config.players.length){
-            newBot(currentConnected, config['server']['ip'], config['server']['port'], config['server']['version']);
+            console.log();
+            console.log(currentConnected + '  ' + config.players.length);
+            console.log();
+            
+            setTimeout(() => {
+                newBot(currentConnected, config['server']['ip'], config['server']['port'], config['server']['version']);
+            }, config['connect-interval']);
         }
     });
 
     bot.on('error', function (reason){
-        console.error('\x1b[31m%s\x1b[0m','[Error - Minecraft Bot] '+reason);
-        newBot(currentConnected, config['server']['ip'], config['server']['port'], config['server']['version']);
+        console.error('\x1b[31m%s\x1b[0m','[Error - Minecraft Bot] Error - '+reason);
+    });
+
+    bot.on('kicked', function (reason){
+        console.error('\x1b[31m%s\x1b[0m','[Error - Minecraft Bot] Kicked - '+reason);
     });
 }
