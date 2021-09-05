@@ -1,7 +1,10 @@
 server:
   ip: 'notAnarchybutmaybe.aternos.me'
   port: '63471'
-  version: '1.12.2'
-players: ''
+  version: '1.17.1'
+players:
+  - 'Grigora1'
+  - 'Grigora2'
+  - 'Grigora3'
 output-file: coordinates.yml
 version: 0.1
