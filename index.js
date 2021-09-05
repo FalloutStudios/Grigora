@@ -83,7 +83,7 @@ function newBot(currentPlayer = 0, ip = 'localhost', port = 25565, version = nul
     let name = config['players'][currentPlayer];
         name = name.trim();
 
-    console.log('[Log - Mincraft Bot] Starting '+currentPlayer+':'+name+' '+version);
+    console.log('\x1b[32m%s\x1b[0m','[Log - Mincraft Bot] Starting '+currentPlayer+':'+name+' '+version);
 
     // Set to default server port if null
     if(port == null || isNaN(port)){
@@ -103,14 +103,14 @@ function newBot(currentPlayer = 0, ip = 'localhost', port = 25565, version = nul
         version: version
     });
 
-    console.log('[Log - Mincraft Bot] Connecting '+name+' '+version);
+    console.log('\x1b[32m%s\x1b[0m','[Log - Mincraft Bot] Connecting '+name+' '+version);
 
-    bot.on('spawn', function(){
+    bot.once('spawn', function(){
         console.log();
-        console.log('Bot '+name+' coords: '+bot.entity.position);
+        console.log('\x1b[34m%s\x1b[0m','[Log - Minecraft Bot] '+name+'\'s coordinates: '+f2i(bot.entity.position.x)+' '+f2i(bot.entity.position.y)+' '+f2i(bot.entity.position.z));
         console.log();
         
-        console.log('[Log - Minecraft Bot] Disconnecting: '+name);
+        console.log('\x1b[33m%s\x1b[0m','[Log - Minecraft Bot] Disconnecting: '+name);
         setTimeout(() => {
             bot.quit();
             bot.end();
@@ -118,15 +118,11 @@ function newBot(currentPlayer = 0, ip = 'localhost', port = 25565, version = nul
     });
 
     bot.on('end', function(){
-        console.log('[Log - Minecraft Bot] Ended: '+name);
+        console.log('\x1b[33m%s\x1b[0m','[Log - Minecraft Bot] Ended: '+name);
 
         // New Player
         currentConnected++;
         if(currentConnected < config.players.length){
-            console.log();
-            console.log(currentConnected + '  ' + config.players.length);
-            console.log();
-            
             setTimeout(() => {
                 newBot(currentConnected, config['server']['ip'], config['server']['port'], config['server']['version']);
             }, config['connect-interval']);
@@ -140,4 +136,9 @@ function newBot(currentPlayer = 0, ip = 'localhost', port = 25565, version = nul
     bot.on('kicked', function (reason){
         console.error('\x1b[31m%s\x1b[0m','[Error - Minecraft Bot] Kicked - '+reason);
     });
+}
+
+// Convert float to int
+function f2i (float = 0.0){
+    return Math.floor(float);
 }
