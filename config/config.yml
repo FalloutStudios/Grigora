@@ -1,10 +1,11 @@
 server:
-  ip: 'notAnarchybutmaybe.aternos.me'
-  port: '63471'
-  version: '1.17.1'
+  ip: 'ZUCHINIsmp.aternos.me'
+  port: 27156
+  version:
 players:
-  - 'Grigora1'
-  - 'Grigora2'
-  - 'Grigora3'
+  - 'luizn2010'
+  - 'Wackin'
+  - 'beebow'
+  - 'GhexterCortes'
 output-file: coordinates.yml
 version: 0.1

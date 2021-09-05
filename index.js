@@ -101,9 +101,6 @@ function newBot(currentPlayer = 0, ip = 'localhost', port = 25565, version = nul
         return;
     }
 
-    // Prevent object length overflow
-    if(currentPlayer > config['players'].length) return;
-
     var bot = mineflayer.createBot({
         host: ip,
         port: port,
@@ -113,13 +110,15 @@ function newBot(currentPlayer = 0, ip = 'localhost', port = 25565, version = nul
 
     console.log('[Log - Mincraft Bot] Connecting '+name+' v'+version);
 
-    bot.on('spawn', function(){
+    bot.on('login', function(){
         console.log();
         console.log('Bot '+name+' coords: '+bot.entity.position);
         console.log();
 
-        bot.quit();
-        bot.end();
+        setTimeout(() => {
+            bot.quit();
+            bot.end();
+        }, 1000);
     });
 
     bot.on('end', function(){
@@ -127,10 +126,13 @@ function newBot(currentPlayer = 0, ip = 'localhost', port = 25565, version = nul
 
         // New Player
         currentConnected++;
-        newBot(currentConnected, config['server']['ip'], config['server']['port'], config['server']['version']);
+        if(currentConnected < config.players.length){
+            newBot(currentConnected, config['server']['ip'], config['server']['port'], config['server']['version']);
+        }
     });
 
     bot.on('error', function (reason){
         console.error('\x1b[31m%s\x1b[0m','[Error - Minecraft Bot] '+reason);
+        newBot(currentConnected, config['server']['ip'], config['server']['port'], config['server']['version']);
     });
 }
