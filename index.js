@@ -9,11 +9,36 @@ const fs = require('fs');
 // Config
 let config = parseConfig();
 
-// Player Connection
+// Output file
+let OutputFileEnalbed = false;
+var Output = {Players: {}};
+if(config['output-file'] != null || config['output-file'].trim() != ''){
+    OutputFileEnalbed = true;
 
+    if(fs.existsSync(config['output-file'])){
+        let outputFile = fs.readFileSync(config['output-file'], 'utf-8');
+            outputFile = yml.parse(outputFile);
+
+            if(outputFile != null){
+                Output = outputFile;
+            }
+    } else{
+        fs.writeFileSync(config['output-file'], yml.stringify(Output));
+    }
+}
+
+// Current Date
+var date = new Date();
+var date_d = String(date.getDate()).padStart(2, '0');
+var date_m = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+var date_y = date.getFullYear();
+var date_dmy = date_d + '/' + date_m + '/' + date_y;
+
+// Player Connection
 let currentConnected = 0;
 newBot(currentConnected, config['server']['ip'], config['server']['port'], config['server']['version']);
 
+// Console colors
 // Green: \x1b[32m%s\x1b[0m
 // Orange: \x1b[33m%s\x1b[0m
 // Red: \x1b[31m%s\x1b[0m
@@ -110,6 +135,17 @@ function newBot(currentPlayer = 0, ip = 'localhost', port = 25565, version = nul
         console.log('\x1b[34m%s\x1b[0m','[Log - Minecraft Bot] '+name+'\'s coordinates: '+f2i(bot.entity.position.x)+' '+f2i(bot.entity.position.y)+' '+f2i(bot.entity.position.z));
         console.log();
         
+        //Record output
+        Output['Players'][name] = {
+            coordinates: f2i(bot.entity.position.x)+' '+f2i(bot.entity.position.y)+' '+f2i(bot.entity.position.z),
+            vector: {
+                x: bot.entity.position.x,
+                y: bot.entity.position.y,
+                z: bot.entity.position.z
+            },
+            lastCheck: date_dmy
+        }
+
         console.log('\x1b[33m%s\x1b[0m','[Log - Minecraft Bot] Disconnecting: '+name);
         setTimeout(() => {
             bot.quit();
@@ -126,6 +162,9 @@ function newBot(currentPlayer = 0, ip = 'localhost', port = 25565, version = nul
             setTimeout(() => {
                 newBot(currentConnected, config['server']['ip'], config['server']['port'], config['server']['version']);
             }, config['connect-interval']);
+        } else{
+            // Record Final Output
+            fs.writeFileSync(config['output-file'], yml.stringify(Output));
         }
     });
 
