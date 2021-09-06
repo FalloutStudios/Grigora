@@ -197,7 +197,9 @@ function newPlayer(){
         console.log('[Log - Config] Generated yml');
         console.log(FinalOutput);
         console.log();
-        fs.writeFileSync(config['output-file'], FinalOutput);
+        if(fs.writeFileSync(config['output-file'], FinalOutput)){
+            process.exit(0);
+        }
     }
 }
 
