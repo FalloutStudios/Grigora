@@ -202,7 +202,7 @@ function newPlayer(){
         console.log(FinalOutput);
         console.log();
         fs.writeFileSync(config['output-file'], FinalOutput);
-        console.log('[Log - Grigora] Exiting proccess');
+        console.log('[Log - Grigora] Exiting process');
         process.exit(0);
     }
 }
