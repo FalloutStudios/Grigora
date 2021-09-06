@@ -40,6 +40,13 @@ var date = new Date();
 var date_d = String(date.getDate()).padStart(2, '0');
 var date_m = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
 var date_y = date.getFullYear();
+var date_mm = 'AM';
+var date_h = date.getHours();
+    if(date_h >= 12) { date_mm = 'PM' }
+    if(date_h > 12){
+        date_h = date_h - 12;
+    }
+var date_mi = date.getMinutes()
 var date_dmy = date_d + '/' + date_m + '/' + date_y;
 
 // Player Connection
@@ -152,7 +159,7 @@ function newBot(currentPlayer = 0, ip = 'localhost', port = 25565, version = nul
                 y: bot.entity.position.y,
                 z: bot.entity.position.z
             },
-            lastCheck: date_dmy
+            lastCheck: date_dmy + ' - ' + date_h+':'+date_m + ' ' + date_mm
         }
 
         console.log('\x1b[33m%s\x1b[0m','[Log - Minecraft Bot] Disconnecting: '+name);
