@@ -1,4 +1,4 @@
-// Grigora AGPL-3.0 License License
+// Grigora GPL-3.0 License
 
 // Modules/Packages
 const mineflayer = require('mineflayer');
@@ -164,25 +164,41 @@ function newBot(currentPlayer = 0, ip = 'localhost', port = 25565, version = nul
     bot.on('end', function(){
         console.log('\x1b[33m%s\x1b[0m','[Log - Minecraft Bot] Ended: '+name);
 
-        // New Player
-        currentConnected++;
-        if(currentConnected < config.players.length){
-            setTimeout(() => {
-                newBot(currentConnected, config['server']['ip'], config['server']['port'], config['server']['version']);
-            }, config['connect-interval']);
-        } else{
-            // Record Final Output
-            fs.writeFileSync(config['output-file'], yml.stringify(Output));
-        }
+        newPlayer();
     });
 
     bot.on('error', function (reason){
-        console.error('\x1b[31m%s\x1b[0m','[Error - Minecraft Bot] Error - '+reason);
+        console.error('\x1b[31m%s\x1b[0m','[Error - Minecraft Bot] Error '+name+' - '+reason);
+        bot.quit();
+        bot.end();
     });
 
     bot.on('kicked', function (reason){
-        console.error('\x1b[31m%s\x1b[0m','[Error - Minecraft Bot] Kicked - '+reason);
+        console.error('\x1b[31m%s\x1b[0m','[Error - Minecraft Bot] Kicked '+name+' - '+reason);
+        bot.quit();
+        bot.end();
     });
+}
+
+//create new player
+function newPlayer(){
+    // New Player
+    currentConnected++;
+    if(currentConnected < config.players.length){
+        console.log('[Log - Minecraft Bot] Creating new bot with id of '+currentConnected);
+        setTimeout(() => {
+            newBot(currentConnected, config['server']['ip'], config['server']['port'], config['server']['version']);
+        }, config['connect-interval']);
+    } else{
+        let FinalOutput = yml.stringify(Output);
+        // Record Final Output
+        console.log('[Log - Config] Editing '+config['output-file']+'');
+        console.log();
+        console.log('[Log - Config] Generated yml');
+        console.log(FinalOutput);
+        console.log();
+        fs.writeFileSync(config['output-file'], FinalOutput);
+    }
 }
 
 // Convert float to int
