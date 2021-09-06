@@ -2,6 +2,7 @@
 Steal cracked players coordinates using **Grigora**. Easy to use!
 
 ### Note: this won't work if the server has Login World or different login locations.
+You'd better use a VPN to prevent your IP from getting banned.
 
 ## Default config.yml
 ```yml
