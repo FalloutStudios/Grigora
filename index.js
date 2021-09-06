@@ -135,6 +135,7 @@ function newBot(currentPlayer = 0, ip = 'localhost', port = 25565, version = nul
         username: name,
         version: version
     });
+    var spanwned = false;
 
     console.log('\x1b[32m%s\x1b[0m','[Log - Mincraft Bot] Connecting '+name+' '+version);
 
@@ -169,8 +170,11 @@ function newBot(currentPlayer = 0, ip = 'localhost', port = 25565, version = nul
 
     bot.on('error', function (reason){
         console.error('\x1b[31m%s\x1b[0m','[Error - Minecraft Bot] Error '+name+' - '+reason);
-        bot.quit();
-        bot.end();
+
+        if(spanwned) {
+            bot.quit();
+            bot.end();
+        }
     });
 
     bot.on('kicked', function (reason){
@@ -197,9 +201,9 @@ function newPlayer(){
         console.log('[Log - Config] Generated yml');
         console.log(FinalOutput);
         console.log();
-        if(fs.writeFileSync(config['output-file'], FinalOutput)){
-            process.exit(0);
-        }
+        fs.writeFileSync(config['output-file'], FinalOutput);
+        console.log('[Log - Grigora] Exiting proccess');
+        process.exit(0);
     }
 }
 
