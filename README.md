@@ -19,5 +19,5 @@ connect-interval: 3000 # Connection interval to prevent "Connection throttled!"
 output-file: coordinates.yml # Output file
 
 # Version
-version: 1.1 # Config version (Don't modify)
+version: 1.3 # Config version (Don't modify)
 ```
