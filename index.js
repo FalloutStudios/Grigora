@@ -1,4 +1,4 @@
-// Grigora GPL-2.0 License
+// Grigora AGPL-3.0 License License
 
 // Modules/Packages
 const mineflayer = require('mineflayer');
