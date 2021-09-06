@@ -8,10 +8,14 @@ const fs = require('fs');
 
 // Config
 let config = parseConfig();
+let complete_ip = config['server']['ip'] + ':' + config['server']['port'];
+    complete_ip = complete_ip.trim().toLowerCase()
 
 // Output file
 let OutputFileEnalbed = false;
-var Output = {Players: {}};
+var Output = {};
+    Output.servers = {};
+
 if(config['output-file'] != null || config['output-file'].trim() != ''){
     OutputFileEnalbed = true;
 
@@ -19,12 +23,16 @@ if(config['output-file'] != null || config['output-file'].trim() != ''){
         let outputFile = fs.readFileSync(config['output-file'], 'utf-8');
             outputFile = yml.parse(outputFile);
 
-            if(outputFile != null){
+            if(outputFile != null && outputFile != ''){
                 Output = outputFile;
             }
     } else{
         fs.writeFileSync(config['output-file'], yml.stringify(Output));
     }
+}
+
+if(typeof Output['servers'][complete_ip] == 'undefined'){
+    Output['servers'][complete_ip] = {};
 }
 
 // Current Date
@@ -136,16 +144,12 @@ function newBot(currentPlayer = 0, ip = 'localhost', port = 25565, version = nul
         console.log();
         
         //Record output
-        Output['Players'][name] = {
+        Output['servers'][complete_ip][name] = {
             coordinates: f2i(bot.entity.position.x)+' '+f2i(bot.entity.position.y)+' '+f2i(bot.entity.position.z),
-            vector: {
+            verctor: {
                 x: bot.entity.position.x,
                 y: bot.entity.position.y,
                 z: bot.entity.position.z
-            },
-            lastServer: {
-                ip: ip,
-                port: port
             },
             lastCheck: date_dmy
         }
