@@ -9,7 +9,7 @@ players:
 
 # Other Settings
 connect-interval: 3000 # Connection interval to prevent "Connection throttled!"
-output-file: coordinates.yml # Output file
+output-file: records.yml # Output file
 
 # Version
-version: 1.2 # Config version (Don't modify)
+version: 1.3 # Config version (Don't modify)
