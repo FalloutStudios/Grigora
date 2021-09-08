@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "start": "node index.js",
+    "test": "node index.js"
+  }
   "dependencies": {
     "mineflayer": "^3.11.0",
     "prompt-sync": "^4.2.0",
