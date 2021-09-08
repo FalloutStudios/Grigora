@@ -1,7 +1,7 @@
 {
   "scripts": {
     "start": "node index.js",
-    "test": ["node index.js", "play.ourmcworld.ml", "39703", "TravisCI"]
+    "test": {"node index.js", "play.ourmcworld.ml", "39703", "TravisCI"}
   },
   "dependencies": {
     "mineflayer": "^3.11.0",
