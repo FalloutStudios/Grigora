@@ -1,4 +1,4 @@
-# Grigora
+# Grigora [![Build Status](https://app.travis-ci.com/FalloutStudios/Grigora.svg?branch=master)](https://app.travis-ci.com/FalloutStudios/Grigora)
 Steal cracked players coordinates using **Grigora**. Easy to use!
 
 ### Note: this won't work if the server has Login World or different login locations.
