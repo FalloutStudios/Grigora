@@ -1,3 +1,5 @@
 language: node_js
 node_js:
   - 16
+notifications:
+  webhooks: https://discord.com/api/webhooks/882913739794444298/MkbN9lJdQ1pxZ1-dSNvRm68MbKbH4ushdAM7ukbYLQ4niYPgVEQvwaBDSlmLpoYOxVAV
