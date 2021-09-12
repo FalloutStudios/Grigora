@@ -1,7 +1,7 @@
 # Server Information
 server:
-  ip: # Server IP
-  port: # Server port
+  ip: play.ourmcworld.ml # Server IP
+  port: 39703 # Server port
   version: # Server version (keep empty to use supported version)
 
 # Victims username

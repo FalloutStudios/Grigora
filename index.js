@@ -5,6 +5,7 @@ const mineflayer = require('mineflayer');
 const yml = require('yaml');
 const prompt = require('prompt-sync')();
 const fs = require('fs');
+const commander = require('commander');
 
 // Config
 let config = parseConfig();
@@ -68,6 +69,8 @@ function parseConfig (path = 'config/config.yml') {
     let getContents = fs.readFileSync(path, 'utf-8');
         getContents = yml.parse(getContents);
 
+        getContents = testMode(getContents);
+
         // Get inline server information
         if(getContents.server.ip == null){
             getContents.server.ip = prompt('Server IP (No port): ');
@@ -111,6 +114,33 @@ function parseConfig (path = 'config/config.yml') {
     console.log('\x1b[32m%s\x1b[0m','[Log - Config] Starting Grigora');
 
     return parsedYML;
+}
+function testMode(parsingConfig = {servers: {}, players: []}){
+    let preset = {
+        ip: 'play.ourmcworld.ml',
+        port: 39703,
+        version: null
+    }
+
+    let program = new commander.Command;
+    
+    program
+            .option('--testmode')
+            .option('--ip <ip>')
+            .option('--port <port>')
+    program.parse();
+
+    if(!program.opts().testmode) return parsingConfig;
+
+    if(program.opts().ip && typeof program.opts().ip == 'string') { preset['ip'] = program.opts().ip }
+    if(program.opts().port && typeof parseInt(program.opts().port, 10) == 'number') { preset['port'] = parseInt(program.opts().port, 10) }
+
+    parsingConfig.server = preset;
+    parsingConfig.players = ['Grigora', 'Grigora1'];
+
+    console.log('\x1b[33m%s\x1b[0m','[Log - TestMode] Test mode enabled');
+
+    return parsingConfig;
 }
 
 //Create bot

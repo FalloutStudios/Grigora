@@ -1,9 +1,10 @@
 {
   "scripts": {
     "start": "node index.js",
-    "test": "node test.js"
+    "test": "node index.js --testmode"
   },
   "dependencies": {
+    "commander": "^8.2.0",
     "mineflayer": "^3.11.0",
     "prompt-sync": "^4.2.0",
     "yaml": "^1.10.2"

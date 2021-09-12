@@ -105,7 +105,5 @@ dist
 
 # Human generated
 .github/
-.travis.yml
-**/config-test.yml
-**/test.js
 LICENSE
+records.yml
