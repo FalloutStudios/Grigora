@@ -7,15 +7,19 @@ const Mineflayer = require('mineflayer');
 const Logger = require('./scripts/logger');
 const Version = require('./scripts/version');
 const Config = require('./scripts/config');
-const PromptConfig = require('./scripts/promptConfig')
+const PromptConfig = require('./scripts/promptConfig');
+const TestMode = require('./scripts/testmode');
 const Startup = require('./scripts/startup')();
 
 const log = new Logger();
     log.defaultPrefix = 'Grigora';
-    
+
 let config = new Config();
     config.location = './config/config.yml';
     config = config.parse();
+
+let testMode = new TestMode();
+    config = testMode.testMode(config);
 
 let promptConfig = new PromptConfig();
     config = promptConfig.prompt(config);
