@@ -7,6 +7,7 @@ const Mineflayer = require('mineflayer');
 const Logger = require('./scripts/logger');
 const Version = require('./scripts/version');
 const Config = require('./scripts/config');
+const PromptConfig = require('./scripts/promptConfig')
 const Startup = require('./scripts/startup')();
 
 const log = new Logger();
@@ -14,5 +15,7 @@ const log = new Logger();
 let config = new Config();
     config.location = './config/config.yml';
     config = config.parse();
+let promptConfig = new PromptConfig();
+    config = promptConfig.prompt(config);
 
     log.log(config);
