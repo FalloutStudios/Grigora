@@ -7,6 +7,12 @@ const Mineflayer = require('mineflayer');
 const Logger = require('./scripts/logger');
 const Version = require('./scripts/version');
 const Config = require('./scripts/config');
+const Startup = require('./scripts/startup')();
 
-let config = new Config().parse();
-let log = new Logger();
+const log = new Logger();
+    log.defaultPrefix = 'Grigora';
+let config = new Config();
+    config.location = './config/config.yml';
+    config = config.parse();
+
+    log.log(config);
