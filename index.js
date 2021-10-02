@@ -5,11 +5,12 @@ const Mineflayer = require('mineflayer');
 
 // Local modules
 const Logger = require('./scripts/logger');
-const Version = require('./scripts/version');
+const Date = require('./scripts/getDate')();
+const Startup = require('./scripts/startup')();
+
 const Config = require('./scripts/config');
 const PromptConfig = require('./scripts/promptConfig');
 const TestMode = require('./scripts/testmode');
-const Startup = require('./scripts/startup')();
 
 const log = new Logger();
     log.defaultPrefix = 'Grigora';
@@ -24,4 +25,3 @@ let testMode = new TestMode();
 let promptConfig = new PromptConfig();
     config = promptConfig.prompt(config);
 
-    log.log(config);
