@@ -1,16 +1,15 @@
 // Grigora GPL-3.0 license
 
-// Core modules
-const Mineflayer = require('mineflayer');
-
 // Local modules
 const Logger = require('./scripts/logger');
-const Date = require('./scripts/getDate')();
 const Startup = require('./scripts/startup')();
 
 const Config = require('./scripts/config');
 const PromptConfig = require('./scripts/promptConfig');
 const TestMode = require('./scripts/testmode');
+
+const Player = require('./scripts/player');
+
 
 const log = new Logger();
     log.defaultPrefix = 'Grigora';
