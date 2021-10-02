@@ -3,19 +3,20 @@ const Prompt = require('prompt-sync')();
 module.exports = function () {
     this.prompt = (config) => {
         if(config == null || !config) throw new Error('Undefined config file');
-        config.server.ip = this.validateIp(config.server.ip);
-        config.server.port = this.validatePort(config.server.port);
+        config.server.ip = this.getIp(config.server.ip);
+        config.server.port = this.getPort(config.server.port);
         config.players = this.getPlayers(config.players);
         
         return config;
     }
-    this.validateIp = (IP) => {
+
+    this.getIp = (IP) => {
         if(IP == null || !IP.length){
             IP = Prompt('Server IP (No port): ');
         }
         return IP;
     }
-    this.validatePort = (PORT) => {
+    this.getPort = (PORT) => {
         if(PORT == null || isNaN(PORT.toString())){
             PORT = Prompt('Server Port: ');
         }
@@ -36,9 +37,11 @@ module.exports = function () {
             PLAYERS = [];
 
             for (const value of newList) {
-                PLAYERS = PLAYERS.concat(value.trim());;
+                PLAYERS = PLAYERS.concat(value.trim());
             }
 
         return PLAYERS;
     }
+
+    this.validateIp = (IP) => {}
 }
