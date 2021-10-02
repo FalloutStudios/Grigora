@@ -12,9 +12,11 @@ const Startup = require('./scripts/startup')();
 
 const log = new Logger();
     log.defaultPrefix = 'Grigora';
+    
 let config = new Config();
     config.location = './config/config.yml';
     config = config.parse();
+
 let promptConfig = new PromptConfig();
     config = promptConfig.prompt(config);
 
