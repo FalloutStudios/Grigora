@@ -43,5 +43,12 @@ module.exports = function () {
         return PLAYERS;
     }
 
-    this.validateIp = (IP) => {}
+    this.validateIp = (IP) => {
+        if(IP == null || IP.length == 0) return false;
+        return true;
+    }
+    this.validatePort = (PORT) => {
+        if(isNaN(PORT) || PORT  < 1 || PORT > 65535) return false;
+        return true;
+    }
 }
