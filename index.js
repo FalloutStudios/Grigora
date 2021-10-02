@@ -9,3 +9,4 @@ const Version = require('./scripts/version');
 const Config = require('./scripts/config');
 
 let config = new Config().parse();
+let log = new Logger();
