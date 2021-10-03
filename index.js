@@ -3,6 +3,7 @@
 // Local modules
 const Logger = require('./scripts/logger');
 const Startup = require('./scripts/startup')();
+const output = require('./scripts/output');
 
 const Config = require('./scripts/config');
 const PromptConfig = require('./scripts/promptConfig');
@@ -24,3 +25,14 @@ let testMode = new TestMode();
 let promptConfig = new PromptConfig();
     config = promptConfig.prompt(config);
 
+let bot = new Player();
+    bot.playerNames = config.players;
+    bot.serverIp = config.server.ip;
+    bot.serverPort = config.server.port;
+    bot.serverVersion = config.server.version;
+    bot.connectInterval = config['connect-interval'];
+
+let outputCompiler = new output();
+    outputCompiler.location = config['output-file'];
+    outputCompiler.records = bot.records;
+    outputCompiler.write();
