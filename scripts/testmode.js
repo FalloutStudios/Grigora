@@ -19,7 +19,6 @@ module.exports = function () {
             port: 25565,
             version: null
         }
-        config.players = ['Grigora1', 'Grigora2', 'Grigora3']
 
         if(!commands.opts().testmode) return config;
 
@@ -28,6 +27,8 @@ module.exports = function () {
         if(commands.opts().port && typeof parseInt(commands.opts().port) == 'number') config.servers.port = parseInt(commands.opts().port)
     
         if(commands.opts().players && typeof commands.opts().players == 'string') config.players = configValidate.getPlayers(config.players);
+
+        if(!config.players || config.players == null) config.players = ['Grigora1', 'Grigora2', 'Grigora3'];
 
         return config;
     }
