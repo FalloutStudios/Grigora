@@ -1,6 +1,7 @@
 const Mineflayer = require('mineflayer');
-const Logger = require('../logger');
-const GetData = require('../getDate')();
+const Logger = require('./logger');
+const GetData = require('./getDate')();
+const Emitter = require('events').EventEmitter;
 
 let log = new Logger();
     log.defaultPrefix = 'Connection';
@@ -8,38 +9,46 @@ let log = new Logger();
 function f2i (float = 0.0){
     return Math.floor(float);
 }
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 module.exports = function () {
     this.playerNames = ['Grigora1', 'Grigora2', 'Grigora3'];
-    this.serverIp = '127.0.0.1';
+    this.connectInterval = 5000;
+    this.serverIp = 'play.ourmcworld.ml';
     this.serverPort = 25565;
     this.serverVersion = null;
 
-    this.connected = 0;
-    this.connectionLimit = object.keys(this.playerNames).lenght;
+    var connected = 0;
+    var connectionLimit = Object.keys(this.playerNames).length;
 
-    this.record = {};
+    var record = {};
+    let events = new Emitter();
 
-    this.newBot = () => {
+    this.newBot = async () => {
         let ip = this.serverIp.trim().toLowerCase();
         let port = parseInt(this.serverPort.toString());
+        let version = this.serverVersion;
 
-        let playerName = this.playerNames[connected];
+        let playerNames = this.playerNames;
+        connectionLimit = Object.keys(this.playerNames).length;
+        let playerName = playerNames[connected];
+        log.log('Preparing connection for ' + playerName);
 
-        log.log('Connecting to server, Player: ' + playerName + '; Ip: ' + ip + '; Port: ' + port);
+        await sleep(this.connectInterval);
 
-        let bot = mineflayer.createBot({
+        var bot = Mineflayer.createBot({
             host: ip,
             port: port,
             username: playerName,
-            version: this.serverVersion
-        });
+            version: version
+        })
 
-        let spawned = false;
+        log.log('Connecting to server, Player: ' + playerName + '; Ip: ' + ip + '; Port: ' + port);
 
         bot.once('spawn', () => {
             log.log(playerName + ' spawned!');
-            spawned = true;
 
             let posX = bot.entity.position.x;
             let posY = bot.entity.position.y;
@@ -54,49 +63,53 @@ module.exports = function () {
                     y: posY,
                     z: posZ
                 },
-                lastCheck: date_dmy + ' - ' + date_h+':'+date_m + ' ' + date_mm
+                lastCheck: GetData.fullDate + ' - ' + GetData.time_h+':'+GetData.time_mi + ' ' + GetData.time_clock
             }
+
+            events.emit('spawn', playerName, posX, posY, posZ);
 
             log.warn('Disconnecting: ' + playerName);
             setTimeout(() => {
                 bot.quit();
                 bot.end();
-            }, 500);
+            }, 1000);
         });
-
         bot.on('error', function (reason){
-            log.error('\x1b[31m%s\x1b[0m','[Error - Minecraft Bot] Error ' + playerName + ' - ' + reason);
+            log.error('Error ' + playerName + ' - ' + reason);
     
-            if(bot) {
+            try {
                 bot.quit();
                 bot.end();
-            }
+            } catch (err) {}
+
+            events.emit('error', reason);
         });
         bot.on('kicked', function (reason){
-            log.error('\x1b[31m%s\x1b[0m','[Error - Minecraft Bot] Kicked ' + playerName + ' - ' + reason);
+            log.warn('Kicked ' + playerName + ' - ' + reason);
 
-            if(bot) {
+            try {
                 bot.quit();
                 bot.end();
-            }
+            } catch (err) {}
+
+            events.emit('kicked', reason);
         });
+        bot.on('end', function(){
+            log.warn('Ended: '+playerName);
 
-        bot.on('end', async function(){
-            log.log('\x1b[33m%s\x1b[0m','[Log - Minecraft Bot] Ended: '+playerName);
+            connected++;
+            spawned = false;
 
-            if(spawned) this.connected++;
-
-            if(connected > connectionLimit) return;
-
-            await connect();
-
-            function connect() {
-                return new Promise((resolve, reject) => {
-                    setTimeout(() => {
-                        this.newBot();
-                    }, this.connectInterval);
-                });
-            };
+            events.emit('ended', playerName);
         });
     }
+
+
+    this.events = events;
+    this.events.on('ended', () => {
+        if(connected > connectionLimit) { this.events.emit('finish'); return; }
+        log.warn('Reconnecting as '+ this.playerNames[connected]);
+
+        this.newBot();
+    });    
 }
