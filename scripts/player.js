@@ -35,8 +35,6 @@ module.exports = function () {
             connectionLimit = Object.keys(this.playerNames).length;
         let playerName = playerNames[connected];
 
-        console.log(this);
-
         log.log('Preparing connection for ' + playerName);
         await sleep(this.connectInterval);
 
