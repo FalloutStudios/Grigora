@@ -107,7 +107,7 @@ module.exports = function () {
 
     this.events = events;
     this.events.on('ended', () => {
-        if(connected > connectionLimit) { this.events.emit('finish'); return; }
+        if(connected >= connectionLimit) { this.events.emit('finish'); return; }
         log.warn('Reconnecting as '+ this.playerNames[connected]);
 
         this.newBot();
