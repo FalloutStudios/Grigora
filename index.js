@@ -36,8 +36,10 @@ let createBot = new Player();
 let outputCompiler = new output();
     outputCompiler.location = config['output-file'];
     outputCompiler.outputId = config.server.ip;
-    outputCompiler.records = createBot.records;
 
     createBot.events.on('finish', function () {
+        outputCompiler.records = createBot.records;
+
+        console.log(createBot.records);
         outputCompiler.write();
     });

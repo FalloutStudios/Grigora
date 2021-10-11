@@ -12,9 +12,6 @@ module.exports = function () {
 
     this.output = { servers: {} };
 
-    this.add = (descriptions = {}) => {
-        return descriptions;
-    }
     this.write = () => {
         if(!this.location || this.location == null) { 
             log.error('No output location specified');
