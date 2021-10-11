@@ -32,10 +32,12 @@ module.exports = function () {
         let version = this.serverVersion;
 
         let playerNames = this.playerNames;
-        connectionLimit = Object.keys(this.playerNames).length;
+            connectionLimit = Object.keys(this.playerNames).length;
         let playerName = playerNames[connected];
-        log.log('Preparing connection for ' + playerName);
 
+        console.log(this);
+
+        log.log('Preparing connection for ' + playerName);
         await sleep(this.connectInterval);
 
         var bot = Mineflayer.createBot({

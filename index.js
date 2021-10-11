@@ -24,7 +24,7 @@ let testMode = new TestMode();
 
 let promptConfig = new PromptConfig();
     config = promptConfig.prompt(config);
-log.log(config.players);
+log.log(config);
 let createBot = new Player();
     createBot.playerNames = config['players'];
     createBot.serverIp = config['server']['ip'];
