@@ -113,8 +113,5 @@ module.exports = function () {
         log.warn('Reconnecting as '+ this.playerNames[connected]);
 
         this.newBot();
-    });   
-    this.events.on('finish', (response) => {
-        console.log(response);
-    }); 
+    });
 }
