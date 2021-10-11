@@ -5,11 +5,11 @@ server:
   version: # Server version (keep empty to use supported version)
 
 # Victims username
-players:
+players: [Grigora1, Grigora2, Grigora3]
 
 # Other Settings
-connect-interval: 3000 # Connection interval to prevent "Connection throttled!"
+connect-interval: 5000 # Connection interval to prevent "Connection throttled!"
 output-file: records.yml # Output file
 
 # Version
-version: 1.3.4 # Config version (Don't modify)
+version: 2.0.0 # Config version (Don't modify)
