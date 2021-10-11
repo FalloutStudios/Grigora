@@ -104,12 +104,17 @@ module.exports = function () {
         });
     }
 
-
     this.events = events;
     this.events.on('ended', () => {
-        if(connected >= connectionLimit) { this.events.emit('finish'); return; }
+        if(connected >= connectionLimit) { 
+            this.record = record;
+            this.events.emit('finish', this.record); return; 
+        }
         log.warn('Reconnecting as '+ this.playerNames[connected]);
 
         this.newBot();
-    });    
+    });   
+    this.events.on('finish', (response) => {
+        console.log(response);
+    }); 
 }
