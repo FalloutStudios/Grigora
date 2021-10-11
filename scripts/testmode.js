@@ -14,13 +14,13 @@ let commands = new Commander.Command;
 
 module.exports = function () {
     this.testMode = (config = {servers: {}, players: []}) => {
+        if(!commands.opts().testmode) return config;
+        
         config.server = {
             ip: 'play.ourmcworld.ml',
             port: 25565,
             version: null
         }
-
-        if(!commands.opts().testmode) return config;
 
         if(commands.opts().ip && typeof commands.opts().ip == 'string') config.servers.ip = commands.opts().ip
         
