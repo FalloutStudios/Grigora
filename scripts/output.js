@@ -32,12 +32,11 @@ module.exports = function () {
         }
 
         if(!contents.servers[this.outputId] || typeof contents.servers[this.outputId] == 'undefined') contents.servers[this.outputId] = {};
-        log.log(contents);
         
         log.warn('Editing records');
         for (const value of Object.keys(this.records)) {
             contents.servers[this.outputId][value] = this.records[value];
         }
-        log.log(contents);
+        Fs.writeFileSync(this.location, Yml.stringify(contents));
     }
 }
