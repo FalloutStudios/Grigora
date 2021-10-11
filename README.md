@@ -8,17 +8,17 @@ You'd better use a VPN to prevent your IP from getting banned.
 ```yml
 # Server Information
 server:
-  ip: # Server IP
-  port: # Server port
+  ip: play.ourmcworld.ml # Server IP
+  port: 25565 # Server port
   version: # Server version (keep empty to use supported version)
 
 # Victims username
 players:
 
 # Other Settings
-connect-interval: 3000 # Connection interval to prevent "Connection throttled!"
+connect-interval: 5000 # Connection interval to prevent "Connection throttled!"
 output-file: records.yml # Output file
 
 # Version
-version: 1.3 # Config version (Don't modify)
+version: 2.0.0 # Config version (Don't modify)
 ```
