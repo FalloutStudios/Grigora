@@ -5,8 +5,9 @@
   },
   "dependencies": {
     "commander": "^8.2.0",
+    "fallout-utility": "^1.0.1-2",
     "mineflayer": "^3.11.2",
-    "prompt-sync": "^4.2.0",
+    "prompt-sync": "^4.1.6",
     "yaml": "^1.10.2"
   }
 }
